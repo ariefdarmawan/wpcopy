@@ -1,8 +1,11 @@
 #!/bin/bash
 
+tar -xzf wp-backup/latest.tar.gz wp-backup
 wp db export wp-backup/latest.sql
 wp db export
 mv *.sql wp-backup
+tar -czf wp-backup/latest.tar.gz wp-backup/*.sql
+rm wp-backup/*.sql
 
 git add .
 git commit -m "$1"

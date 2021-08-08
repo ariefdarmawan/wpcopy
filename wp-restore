@@ -1,0 +1,18 @@
+#!/bin/bash
+
+configFile=wp-config-$1.php
+if test -f "$configFile"; then
+    cp $configFile wp-config.php
+    echo "activate config $configFile"
+else
+    echo "$configFile does not exist"
+fi
+
+dbFile=wp-backup/latest.tar.gz
+if test -f "$dbFile"; then
+    tar -xzf $dbFile wp-backup
+    wp db import wp-backup/latest.sql
+    rm wp-backup/latest.sql
+else
+    echo "$dbFile does not exist"
+fi
